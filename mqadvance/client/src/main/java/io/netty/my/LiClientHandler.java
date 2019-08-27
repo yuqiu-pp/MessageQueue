@@ -10,4 +10,10 @@ public class LiClientHandler extends ChannelInboundHandlerAdapter {
         System.out.println((String)msg);
         ctx.close();
     }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        cause.printStackTrace();
+        ctx.close();
+    }
 }

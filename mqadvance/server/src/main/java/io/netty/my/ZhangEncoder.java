@@ -9,7 +9,10 @@ public class ZhangEncoder extends MessageToByteEncoder<String> {
 
     @Override
     protected void encode(ChannelHandlerContext ctx, String s, ByteBuf out) throws Exception {
+        System.out.println("encode");
         // 4byte int len  + data
+        out.writeInt(s.length());
+
         byte[] data = s.getBytes("UTF-8");
         // out = Unpooled.buffer(data.length);
         out.writeBytes(data);
