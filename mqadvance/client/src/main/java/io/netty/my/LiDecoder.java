@@ -11,11 +11,20 @@ public class LiDecoder extends ByteToMessageDecoder {
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf in, List<Object> out) throws Exception {
         System.out.println("decode" + in.readableBytes());
-        if (in.readableBytes() < 21) {
+        if (in.readableBytes() < 4) {
             return;
         }
+        int len = in.readInt();
 
-        byte[] data = in.array();
-        out.add(new String(in.array()));
+        if (in.hasArray()){
+            out.add(new String(in.array()));
+        }else {
+            byte[] bytes = new byte[in.readableBytes()];
+            in.getBytes(in.readerIndex(), bytes);
+            out.add(new String(bytes));
+        }
+
+
+
     }
 }
